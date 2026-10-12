@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Smart Patient Intake</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eaf3fd;--card:#fff;--tx:#0b2149;--mut:#4f6794;--bd:#c5dbf4;--ac:#14438f;--acx:#fff;--lb:#d6e8fc;--hd:#0b2a63;--hdt:#fff;--r:#b42318;--rb:#fee4e2;--y:#93370d;--yb:#fef0c7;--g:#05603a;--gb:#d1fadf;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#07142e;--card:#0f2250;--tx:#e8f1ff;--mut:#9db8e6;--bd:#223d78;--ac:#7cc4ff;--acx:#07142e;--lb:#17326b;--hd:#0a1d44;--hdt:#e8f1ff;--r:#fda29b;--rb:#55160c;--y:#fec84b;--yb:#4e2a07;--g:#75e0a7;--gb:#074d31}}
+:root[data-theme="dark"]{--bg:#07142e;--card:#0f2250;--tx:#e8f1ff;--mut:#9db8e6;--bd:#223d78;--ac:#7cc4ff;--acx:#07142e;--lb:#17326b;--hd:#0a1d44;--hdt:#e8f1ff;--r:#fda29b;--rb:#55160c;--y:#fec84b;--yb:#4e2a07;--g:#75e0a7;--gb:#074d31}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 Poppins,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:16px}
+h1{font-size:1.4rem;margin:.2rem 0}
+.sub{color:var(--mut);margin:0 0 12px}
+.warn{background:var(--yb);color:var(--y);border-radius:8px;padding:8px 12px;font-size:.88rem;margin-bottom:14px}
+.tabs{display:flex;gap:8px;margin-bottom:14px}
+.tab{flex:1;padding:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;font:inherit;cursor:pointer}
+.tab.on{background:var(--ac);color:var(--acx);border-color:var(--ac)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px;margin-bottom:12px}
+label{display:block;font-weight:600;margin:10px 0 4px;font-size:.92rem}
+input,textarea{width:100%;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+textarea{min-height:76px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){.row{grid-template-columns:1fr}}
+button.pri{background:var(--ac);color:var(--acx);border:0;border-radius:8px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer}
+button.sec{background:transparent;color:var(--ac);border:1px solid var(--ac);border-radius:8px;padding:9px 14px;font:inherit;cursor:pointer}
+button:disabled{opacity:.6;cursor:wait}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.badge{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.8rem;font-weight:700;text-transform:uppercase}
+.urgent{background:var(--rb);color:var(--r)}.soon{background:var(--yb);color:var(--y)}.routine{background:var(--gb);color:var(--g)}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.meta{color:var(--mut);font-size:.88rem}
+.kv{font-size:.9rem;margin:4px 0}.kv b{font-weight:600}
+.flag{color:var(--r);font-weight:600;font-size:.9rem}
+.msg{padding:12px;border-radius:8px;background:var(--gb);color:var(--g);margin-top:12px}
+.empty{text-align:center;color:var(--mut);padding:30px 10px}
+.done{opacity:.65}
+.bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chip{padding:6px 12px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:99px;font:inherit;font-size:.85rem;cursor:pointer}
+.chip.on{background:var(--ac);color:var(--acx);border-color:var(--ac)}
+.tk{font-size:2rem;font-weight:800;letter-spacing:.05em;margin:4px 0}
+.tkc{font-weight:700;background:var(--bg);border:1px solid var(--bd);border-radius:6px;padding:1px 8px;font-size:.85rem}
+.st{font-size:.78rem;font-weight:700;text-transform:uppercase;color:var(--ac)}
+select{padding:7px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+.top{background:var(--hd);color:var(--hdt);padding:14px 0 10px;border-bottom:4px solid #7cc4ff}
+.top h1{margin:0;color:inherit;font-weight:700;letter-spacing:-.01em}
+.top .sub{color:#b9d6f7;margin:2px 0 0;font-size:.9rem}
+.warn{background:var(--lb);color:var(--ac);border:1px solid var(--bd)}
+.msg{background:var(--lb);color:var(--ac);border:1px solid var(--bd)}
+.card{border-left:4px solid var(--ac)}
+.tk{color:var(--ac)}
+.tabs .tab{font-weight:600}
+.tab:hover:not(.on),.chip:hover:not(.on){background:var(--lb)}
+button.sec:hover{background:var(--lb)}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--ac);outline-offset:1px}
+[hidden]{display:none!important}
+.hdr{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.hbtn{background:transparent;color:var(--hdt);border:1px solid #7cc4ff;border-radius:8px;padding:8px 14px;font:inherit;font-size:.85rem;cursor:pointer;white-space:nowrap}
+.hbtn:hover{background:rgba(124,196,255,.2)}
+.login{max-width:380px;margin:20px auto}
+.login h2{margin:0 0 2px;font-size:1.15rem}
+.err{color:var(--r);font-size:.88rem;margin-top:8px;min-height:1.3em}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap hdr"><div><h1>Smart Patient Intake</h1><p class="sub">Intake &rarr; rule-based triage &rarr; ticket and department routing &rarr; clinician queue</p></div><button class="hbtn" id="lg">Staff login</button></div></header>
+<div class="wrap">
+  <div class="warn">Demo only. Use fictional patient data. Demo only. Use fictional patient data. Automated rules do not diagnose; a clinician must review every ticket.</div>
+  <div class="tabs" id="tabs" hidden>
+    <button class="tab on" id="t1">Patient intake</button>
+    <button class="tab" id="t2">Staff dashboard (<span id="cnt">0</span>)</button>
+  </div>
+
+  <section id="p1">
+    <div class="card">
+      <div class="row">
+        <div><label for="nm">Name</label><input id="nm" placeholder="Fictional name"></div>
+        <div><label for="ag">Age</label><input id="ag" type="number" min="0" max="120"></div>
+      </div>
+      <label for="rs">What brings you in today? Describe in your own words</label>
+      <textarea id="rs"></textarea>
+      <label for="du">How long has this been going on?</label>
+      <input id="du" placeholder="e.g. 3 days">
+      <label for="md">Medications you take</label>
+      <input id="md" placeholder="or 'none'">
+      <label for="al">Allergies</label>
+      <input id="al" placeholder="or 'none'">
+      <div class="acts">
+        <button class="pri" id="go">Submit intake</button>
+        <button class="sec" id="smp">Fill sample patient</button>
+      </div>
+      <div id="ok"></div>
+    </div>
+  </section>
+
+  <section id="p0" hidden>
+    <div class="card login">
+      <h2>Clinical Admin Portal</h2>
+      <p class="meta" style="margin:0 0 6px">Authorised clinic staff only.</p>
+      <label for="lu">Username</label>
+      <input id="lu" autocomplete="off" autocapitalize="none" spellcheck="false">
+      <label for="lpw">Password</label>
+      <input id="lpw" type="password" autocomplete="off">
+      <div class="err" id="le" role="alert"></div>
+      <div class="acts"><button class="pri" id="lb">Sign in</button><button class="sec" id="lx">Back to patient intake</button></div>
+    </div>
+  </section>
+
+  <section id="p2" hidden><div class="bar" id="bar"></div><div id="list"></div></section>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const RANK = {routine:0, soon:1, urgent:2};
+const DEPTS = [
+ {code:'EMG',name:'Emergency Triage',room:'Triage Room 1'},
+ {code:'GEN',name:'General Consultation',room:'Consulting Room 2'},
+ {code:'CHR',name:'Chronic Care',room:'Chronic Care Window'},
+ {code:'MCH',name:'Maternal & Child Health',room:'Room 4'},
+ {code:'MNT',name:'Mental Health',room:'Counselling Room'},
+ {code:'PHA',name:'Pharmacy & Admin',room:'Pharmacy Window'}
+];
+let authed=false, patients=[], filter='ALL';
+async function api(url, options={}) {
+ const res=await fetch(url,{credentials:'same-origin',headers:{'Content-Type':'application/json',...(options.headers||{})},...options});
+ const data=await res.json().catch(()=>({}));
+ if(!res.ok) throw new Error(data.error||'Request failed. Please try again.');
+ return data;
+}
+function show(tab){ if(tab===2&&!authed)tab=0; $('p0').hidden=tab!==0; $('p1').hidden=tab!==1; $('p2').hidden=tab!==2; $('t1').classList.toggle('on',tab===1); $('t2').classList.toggle('on',tab===2); if(tab===2)loadPatients(); }
+$('t1').onclick=()=>show(1); $('t2').onclick=()=>show(2);
+$('smp').onclick=()=>{ $('nm').value='Thandi Demo'; $('ag').value=54; $('rs').value="I've had a bad headache and dizziness for a few days, and last night I felt some tightness in my chest when I climbed the stairs. I'm also very thirsty all the time."; $('du').value='3 days'; $('md').value='Metformin, amlodipine'; $('al').value='Penicillin'; };
+$('go').onclick=async()=>{
+ const p={name:$('nm').value.trim(),age:$('ag').value,reason:$('rs').value.trim(),duration:$('du').value.trim(),meds:$('md').value.trim(),allergies:$('al').value.trim()};
+ if(!p.name||!p.reason){$('ok').innerHTML='<div class="msg">Please add a name and the reason for your visit.</div>';return;}
+ const b=$('go');b.disabled=true;b.textContent='Processing...';
+ try { const result=await api('/api/patients',{method:'POST',body:JSON.stringify(p)}); ['nm','ag','rs','du','md','al'].forEach(i=>$(i).value=''); const d=result.department; $('ok').innerHTML=`<div class="msg"><div>Your ticket number</div><div class="tk">${esc(result.ticket)}</div><div>Please go to <b>${esc(d.name)}</b> (${esc(d.room)}).</div><div>${result.pr==='urgent'?'A red-flag keyword was detected. Please tell clinic staff immediately.':'Patients ahead of you: <b>not available until staff queue is loaded</b>'}</div><div class="meta" style="margin-top:6px;color:inherit">This is a demo routing aid, not a diagnosis. If you feel worse, alert clinic staff immediately.</div></div>`; if(authed) await loadPatients(); }
+ catch(e){$('ok').innerHTML=`<div class="msg" role="alert">${esc(e.message)}</div>`;} finally{b.disabled=false;b.textContent='Submit intake';}
+};
+async function loadPatients(){ try{patients=await api('/api/patients');render();}catch(e){if(e.message.includes('login')){authed=false;$('tabs').hidden=true;$('lg').textContent='Staff login';show(1);}else $('list').innerHTML=`<div class="msg">${esc(e.message)}</div>`;} }
+function ahead(p){return patients.filter(q=>q.id!==p.id&&q.dept===p.dept&&q.status==='waiting'&&(RANK[q.pr]>RANK[p.pr]||(RANK[q.pr]===RANK[p.pr]&&new Date(q.time)<new Date(p.time)))).length;}
+function render(){
+ $('cnt').textContent=patients.filter(p=>p.status!=='done').length;
+ const active=patients.filter(p=>p.status!=='done'), waiting=c=>patients.filter(p=>p.dept===c&&p.status==='waiting').length;
+ $('bar').innerHTML=`<button class="chip ${filter==='ALL'?'on':''}" data-f="ALL">All (${active.length})</button>`+DEPTS.map(d=>`<button class="chip ${filter===d.code?'on':''}" data-f="${d.code}">${esc(d.name)} (${waiting(d.code)})</button>`).join('');
+ $('bar').querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{filter=b.dataset.f;render();});
+ const statusRank={serving:0,waiting:1,done:2};
+ const list=patients.filter(p=>filter==='ALL'||p.dept===filter).sort((a,b)=>statusRank[a.status]-statusRank[b.status]||RANK[b.pr]-RANK[a.pr]||new Date(a.time)-new Date(b.time));
+ if(!list.length){$('list').innerHTML='<div class="empty">No tickets here yet. Submit an intake from the Patient intake tab.</div>';return;}
+ const next={waiting:['serving','Call patient'],serving:['done','Mark done'],done:['waiting','Reopen']};
+ $('list').innerHTML=list.map(p=>`<div class="card ${p.status==='done'?'done':''}"><div class="hd"><div><span class="tkc">${esc(p.ticket)}</span> <b>${esc(p.name)}</b>${p.age?`, ${esc(p.age)}`:''} <span class="meta">· ${new Date(p.time).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</span></div><div><span class="st">${p.status==='serving'?'In consultation':esc(p.status)}</span> <span class="badge ${esc(p.pr)}">${esc(p.pr)}</span></div></div>
+ <div class="kv"><b>Department:</b> <select data-d="${esc(p.id)}">${DEPTS.map(d=>`<option value="${d.code}" ${d.code===p.dept?'selected':''}>${esc(d.name)}</option>`).join('')}</select>${p.status==='waiting'?`<span class="meta">· ahead in queue: ${ahead(p)}</span>`:''}</div>
+ ${p.rf?.length?`<div class="flag">⚠ Red flags: ${p.rf.map(esc).join(', ')}</div>`:''}<label>Clinician summary (editable)</label><textarea data-i="${esc(p.id)}">${esc(p.summary)}</textarea>
+ <div class="kv"><b>Why this priority:</b> ${esc(p.reason)}</div><div class="kv"><b>Symptoms:</b> ${esc((p.symptoms||[]).join(', ')||'-')}</div><div class="kv"><b>Duration:</b> ${esc(p.dur||'-')}</div><div class="kv"><b>Medications:</b> ${esc((p.meds||[]).join(', ')||'-')}</div><div class="kv"><b>Allergies:</b> ${esc((p.alg||[]).join(', ')||'-')}</div><div class="acts"><button class="sec" data-s="${esc(p.id)}">${next[p.status][1]}</button><span class="meta" data-note="${esc(p.id)}"></span></div></div>`).join('');
+ $('list').querySelectorAll('textarea[data-i]').forEach(t=>t.onchange=async()=>{try{await api('/api/patients/'+encodeURIComponent(t.dataset.i),{method:'PATCH',body:JSON.stringify({summary:t.value})});}catch(e){alert(e.message);}});
+ $('list').querySelectorAll('[data-s]').forEach(b=>b.onclick=async()=>{const p=patients.find(x=>x.id===b.dataset.s);try{await api('/api/patients/'+encodeURIComponent(p.id),{method:'PATCH',body:JSON.stringify({status:next[p.status][0]})});await loadPatients();}catch(e){alert(e.message);}});
+ $('list').querySelectorAll('[data-d]').forEach(sel=>sel.onchange=async()=>{try{await api('/api/patients/'+encodeURIComponent(sel.dataset.d),{method:'PATCH',body:JSON.stringify({dept:sel.value})});await loadPatients();}catch(e){alert(e.message);}});
+}
+async function login(){const b=$('lb');b.disabled=true;try{await api('/api/login',{method:'POST',body:JSON.stringify({username:$('lu').value.trim(),password:$('lpw').value})});authed=true;$('lu').value='';$('lpw').value='';$('le').textContent='';$('tabs').hidden=false;$('lg').textContent='Log out';show(2);}catch(e){$('le').textContent=e.message;$('lpw').value='';}finally{b.disabled=false;}}
+async function logout(){try{await api('/api/logout',{method:'POST',body:'{}'});}catch(_){}authed=false;patients=[];$('tabs').hidden=true;$('lg').textContent='Staff login';$('list').innerHTML='';$('bar').innerHTML='';show(1);}
+$('lg').onclick=()=>authed?logout():show(0);$('lb').onclick=login;$('lx').onclick=()=>show(1);$('lu').onkeydown=$('lpw').onkeydown=e=>{if(e.key==='Enter')login();};
+(async()=>{try{const s=await api('/api/session');if(s.authenticated){authed=true;$('tabs').hidden=false;$('lg').textContent='Log out';show(2);}}catch(_){}})();
+</script>
+</body>
+</html>

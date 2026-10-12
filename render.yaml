@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: smart-patient-intake
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    disk:
+      name: patient-intake-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: STAFF_USERNAME
+        sync: false
+      - key: STAFF_PASSWORD_HASH
+        sync: false
+      - key: DATA_FILE
+        value: /var/data/patients.json
