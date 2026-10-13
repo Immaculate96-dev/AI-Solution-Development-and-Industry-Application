@@ -40,6 +40,15 @@ The system collects basic patient information, applies predefined rules to ident
 
 **Important:** Automated flags and department assignments are administrative aids only. All clinical decisions must be made by qualified healthcare professionals.
 
+## Staff Login Credentials
+
+
+| Field | Demo value |
+|---|---|
+| Username | `clinical.admin` |
+| Password | `administrator` |
+
+
 ## Technology Stack
 
 - **Frontend:** HTML5, CSS3, JavaScript
@@ -123,14 +132,6 @@ npm run dev
 ```
 
 If the application fails to start, check the terminal output, verify that dependencies installed successfully, and confirm that your environment variables are configured correctly.
-
-## Staff Login Credentials
-
-
-| Field | Demo value |
-|---|---|
-| Username | `clinical.admin` |
-| Password | `administrator` |
 
 
 ## API Routes
