@@ -126,26 +126,12 @@ If the application fails to start, check the terminal output, verify that depend
 
 ## Staff Login Credentials
 
-The following credentials are provided for **local demonstration mode only**.
 
 | Field | Demo value |
 |---|---|
 | Username | `clinical.admin` |
 | Password | `administrator` |
 
-These fallback credentials are intended for development when the application is not running in production mode.
-
-For a safer configuration, set a custom `STAFF_USERNAME` and a bcrypt password hash in your local `.env` file.
-
-Generate a password hash using:
-
-```powershell
-node -e "require('bcryptjs').hash('YOUR-STRONG-PASSWORD', 12).then(console.log)"
-```
-
-Use the resulting hash as the value of `STAFF_PASSWORD_HASH`.
-
-Do not use the demonstration password on a public deployment. Production mode requires a configured password hash rather than the default demo password.
 
 ## API Routes
 
@@ -165,7 +151,7 @@ The staff-only endpoints require a valid authenticated session. The health and s
 
 ## Environment Configuration
 
-Configure environment variables through your local `.env` file or your hosting provider's environment settings.
+These environment variables are configured through my local `.env` file and my hosting provider's environment settings.
 
 | Variable | Purpose |
 |---|---|
@@ -176,25 +162,21 @@ Configure environment variables through your local `.env` file or your hosting p
 | `DATA_FILE` | Optional path for the patient JSON data file |
 | `PORT` | Port on which the server listens; hosting platforms commonly supply this value |
 
-Keep all secrets out of source control. Use the hosting platform's environment-variable settings for production configuration.
+All secrets are kept out of source control and i use the hosting platform's environment-variable settings for production configuration.
 
 ## Deployment
 
-The application can be deployed to a hosting platform that supports Node.js applications and persistent storage.
+The application has been deployed to a hosting platform that supports Node.js applications and persistent storage.
 
 A deployment workflow using GitHub and Render is:
 
-1. Push the latest project changes to your GitHub repository.
+1. Push the latest project changes to GitHub repository.
 2. Create a new web service on Render and connect the repository.
 3. Configure the build command as `npm install`.
 4. Configure the start command as `npm start`.
 5. Add the required environment variables in the hosting dashboard.
-6. Configure persistent storage and set `DATA_FILE` to a location on that persistent volume.
+6. Configure persistent storage and set `DATA_FILE` to a location on that persistent volume. (which is still to be completed)
 7. Deploy the application and test the patient intake and staff dashboard workflows.
-
-The application writes demonstration patient records and session data to local storage. A hosting environment with an ephemeral filesystem may lose those files when the service restarts or redeploys. Configure persistent storage and verify the session database's storage location before deployment.
-
-For a public demonstration, use fictional records and HTTPS. Before supporting real clinic operations, replace the demonstration storage layer with an appropriate production database and implement the required security, backup, monitoring, and access-control measures.
 
 ## Limitations
 
@@ -212,7 +194,7 @@ For a public demonstration, use fictional records and HTTPS. Before supporting r
 This project is intended for development, demonstration, and educational use.
 
 - Use fictional patient information when testing.
-- Never commit `.env`, passwords, API keys, session secrets, or real patient records.
+- `.env`, passwords, API keys, session secrets, or real patient records are not commited
 - Use strong staff credentials and secure session configuration.
 - Enable HTTPS on deployed environments.
 - Restrict access to staff-only functionality.
@@ -237,7 +219,7 @@ Smart Patient Intake demonstrates practical software development concepts, inclu
 Potential enhancements include:
 
 - Integrating a properly configured AI service for structured summaries, with clinician review and validation.
-- Introducing a production-grade database.
+- Introducing a production-grade database and persistent storage
 - Implementing stronger staff authentication and role-based access control.
 - Adding audit logging and operational reporting.
 - Improving triage rules through appropriate clinical review and testing.
