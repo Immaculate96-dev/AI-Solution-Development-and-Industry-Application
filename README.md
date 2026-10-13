@@ -228,4 +228,4 @@ Potential enhancements include:
 
 ## License
 
-No license has been specified for this project. Add a `LICENSE` file if you intend to distribute the source code under a particular open-source license.
+No license has been specified for this project.
