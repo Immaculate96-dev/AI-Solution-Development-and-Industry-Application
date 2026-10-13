@@ -1,5 +1,7 @@
 # Smart Patient Intake System
 
+https://smart-patient-intake.onrender.com
+
 A web-based clinic intake and patient queue management prototype designed to streamline the initial patient registration process, highlight potential warning signs, and direct patients to the appropriate clinic department.
 
 Smart Patient Intake provides a central interface for collecting patient information and a staff dashboard for reviewing submissions, prioritising queues, and managing patient flow. The prototype demonstrates how web technologies and rule-based automation can support administrative workflows in a healthcare environment.
